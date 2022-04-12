@@ -1,0 +1,194 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <br>
+<h1>SIMULADOR DE CONTRATOS PETROLEROS  </h1>
+    <form id="transactionForm">
+        <div class="claseformulario">
+            <label for="Produccionf">&nbsp;Producción fiscalizada&nbsp;</label>
+            <input id="Produccionf" name="Produccionf" type="number" min="0" step="0.01" placeholder="Barriles" >
+        </div>
+
+        <div class="claseformulario">
+            <label for="Precio">Precio del petróleo WTI</label>
+            <input id="Precio" name="Precio" type="number" min="0" step="0.01" placeholder="0,00 USD">
+        </div>
+        
+
+        <div class="claseformulario">
+            <label for="CostoP">Costo de producción</label>
+            <input id="CostoP"  name="CostoP" type="number" min="0" step="0.01" placeholder="0,00 USD">
+        </div>
+
+        <div class="claseformulario">
+            <label for="Tari">Tarifa</label>
+            <input id="Tari"  name="Tari" type="number" min="0" step="0.01" placeholder="0,00 USD">
+        </div>
+        <div class="claseformulario">
+            <br>
+            <h2>Tipo de contrato</h2>
+            
+            <label for="Pser">Prestación de servicios</label>
+            <input id="Pser" type="radio" name="Tcontrato" value="Pres"> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="Part">Participación </label>
+            <input id="Part" type="radio" name="Tcontrato" value="Parti">
+        </div>
+
+        <div class="claseformulario">
+            <button id="bcalcular">Calcular</button>
+
+        </div>
+    </form>
+    
+    <div class="tablef">
+        <table id="tablad"> 
+            <tr>
+                <th>
+                    Producción fiscalizada
+                </th>
+
+                <th>
+                    Ingresos Empresa 
+                </th>
+
+                <th>
+                    Costo de producción 
+
+                </th>
+
+                <th>
+                    Ingresos Gasto-Empresa 
+                </th> 
+
+                <th>
+                    Utilidad trabajadores/Amazonía 
+                </th>
+
+                <th>
+                    Impuesto a la Renta 
+
+                </th>
+
+                <th>
+                    Renta Empresa
+
+                </th>
+
+                <th>
+                    Renta Estado 
+                </th>
+
+            </tr>
+
+            </tr>
+        </table>
+            
+    </div>
+    <script> 
+
+        const form=document.getElementById("transactionForm");
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+            let transactionFormData=new FormData(form);
+       
+            insertRowIntablad(transactionFormData)
+        })
+
+        function insertRowIntablad(transactionFormData) {
+            
+            let tabladRef=document.getElementById("tablad");
+            let newTransactionRowRef=tabladRef.insertRow(-1);
+            let newtypeCellRef=newTransactionRowRef.insertCell(0);
+            newtypeCellRef.textContent= transactionFormData.get("Produccionf")
+
+            let a = Number(transactionFormData.get("Produccionf"));
+            let b = Number(transactionFormData.get("Tari"));
+            let IngresosE= a*b .toFixed(2);
+                       
+            newtypeCellRef=newTransactionRowRef.insertCell(1);
+            newtypeCellRef.textContent=Number(IngresosE).toFixed(2);
+
+            newtypeCellRef=newTransactionRowRef.insertCell(2);
+            newtypeCellRef.textContent=transactionFormData.get("CostoP")
+
+            let c = Number(transactionFormData.get("CostoP"));
+            let IngresosG=IngresosE-c
+
+            newtypeCellRef=newTransactionRowRef.insertCell(3);
+            newtypeCellRef.textContent=Number(IngresosG).toFixed(2);
+
+
+            let UtilidadT=IngresosG*0.15
+
+            newtypeCellRef=newTransactionRowRef.insertCell(4);
+            newtypeCellRef.textContent=Number(UtilidadT).toFixed(2);
+
+            let ImpuestoR=(IngresosG-UtilidadT)*0.25;
+
+            newtypeCellRef=newTransactionRowRef.insertCell(5);
+            newtypeCellRef.textContent=Number(ImpuestoR).toFixed(2);
+
+            let RentaE=IngresosG-UtilidadT-ImpuestoR
+
+            newtypeCellRef=newTransactionRowRef.insertCell(6);
+            newtypeCellRef.textContent=Number(RentaE).toFixed(2);
+
+            
+            let d = Number(transactionFormData.get("Precio"));
+            let IngresosB= a*d
+            let MargenS=IngresosB*0.25
+            let CostosTr=a*1.44
+            let CostosCo=a*0.2
+            let Ley10=a*1
+            let Ley40=a*0.3
+            let Rent=MargenS+Ley10+Ley40+UtilidadT+ImpuestoR
+            let RentaEs=Rent+(IngresosB-MargenS-CostosTr-CostosCo-Ley10-Ley40-IngresosE)         
+
+            newtypeCellRef=newTransactionRowRef.insertCell(7);
+            newtypeCellRef.textContent=Number(RentaEs).toFixed(2);
+
+            }
+
+    </script>
+
+    <style>
+
+    
+        h1{
+            text-align: center;
+            margin-bottom:60px;
+        }
+        form{
+            text-align: center;
+        }
+        .claseformulario{
+            margin-bottom:20px ;
+
+        }   
+        #bcalcular{
+            font-size: 23px;
+            
+        }
+
+        td,th{
+            border: solid red 1px;
+            padding: 10px;
+            text-align: center;
+            }
+
+        .tablef table{
+            margin: 0px auto;
+
+        }
+            
+
+    </style>
+    
+</body>
+</html>
