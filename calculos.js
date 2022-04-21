@@ -1,16 +1,15 @@
-
 window.onload = function () {
     document.getElementById("bcalcular").onclick = calcularE;
 }
 
 function calcularE() {
 
-    window.addEventListener("load",()=>{
-        const bcalcular=document.querySelector(".bcalcular")
+    window.addEventListener("load", () => {
+        const bcalcular = document.querySelector(".bcalcular")
         bcalcular.style.opacity = 0
         bcalcular.style.visibility = "hidden"
     })
-    
+
     let a = Number(document.getElementById("Produccionf").value);
     let b = Number(document.getElementById("Tari").value);
     let c = Number(document.getElementById("CostoP").value);
@@ -34,6 +33,8 @@ function calcularE() {
     let total = RentaE + RentaEs
     let PorcentajeE = (RentaE / total) * 100
     let PorcentajeEs = (RentaEs / total) * 100
+
+
 
     let tabladRef = document.getElementById("tablad");
     let newTransactionRowRef = tabladRef.insertRow(-1);
@@ -59,16 +60,15 @@ function calcularE() {
     let newDeleteCell = newTransactionRowRef.insertCell(6);
     let deleteButton = document.createElement("button");
 
-    PartE()
+    PartEs()
 
-
-    function PartE() {
+    function PartEs() {
         let a = Number(document.getElementById("Produccionf").value);
         let c = Number(document.getElementById("CostoP").value);
         let d = Number(document.getElementById("Precio").value);
-
         let con = []
-        for (let i = 0; i < 1; i += 0.00000001) {
+        for (let h = 100000; h <= 1000000; h++) {
+            i = h / 1000000000
             ProduccionPE = i * a;
             let IngresosBr = ProduccionPE * d;
             Ctrans = ProduccionPE * 1.44;
@@ -78,17 +78,15 @@ function calcularE() {
             let UtilidadTP = IngresosAP * 0.15;
             let ImpuestoRP = (IngresosAP - UtilidadTP) * 0.25;
             let RentaEP = (IngresosAP - UtilidadTP - ImpuestoRP).toFixed(0)
-            con.push(RentaEP).toFixed(0)
-
-
+            con.push(RentaEP)
         }
+
+
         let qqq = con
-        rr = RentaE
-
+        rr = Number(RentaE / 1000);
         let index = qqq.indexOf((rr).toFixed(0))
-        let porcentaje = (index / 1000000).toFixed(2)
-
-
+        let porcentaje = ((index + 100000) / 10000).toFixed(2)
+        
 
 
         newtypeCellRef = newTransactionRowRef.insertCell(7);
@@ -105,7 +103,6 @@ function calcularE() {
         })
     }
 }
-
 
 
 document.getElementById("calcularp").onclick = calcularp;
@@ -144,12 +141,10 @@ function calcularp() {
     let newDeleteCell = newTransactionRowRef.insertCell(3);
     let deleteButton = document.createElement("button");
     deleteButton.textContent = "Eliminar";
-        newDeleteCell.appendChild(deleteButton)
+    newDeleteCell.appendChild(deleteButton)
 
-        deleteButton.addEventListener("click", (event) => {
-            event.target.parentNode.parentNode.remove()
+    deleteButton.addEventListener("click", (event) => {
+        event.target.parentNode.parentNode.remove()
 
-
-
-        })
+    })
 }
